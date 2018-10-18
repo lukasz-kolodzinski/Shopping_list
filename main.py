@@ -14,5 +14,8 @@ class ShoppingList(tk.Tk):
         else:
             self.products = products
 
+        self.title("Shopping List")
+        self.geometry("500x700")
+
 shopping_list = ShoppingList()
 shopping_list.mainloop()
