@@ -13,16 +13,23 @@ class TransferList(tk.Tk):
         else:
             self.players = players
 
+        self.app_canvas = tk.Canvas(self)
+        self.names_bar_frame = tk.Frame(self.app_canvas)
+        self.text_frame = tk.Frame(self)
+        self.scrolling = tk.Scrollbar(self.app_canvas, orient="vertical", command=self.app_canvas.yview)
+        self.app_canvas.configure(yscrollcommand=self.scrolling.set)
         self.title("Wish Transfer")
         self.geometry("500x700")
-
+        self.create_wish = tk.Text(self, height=2, bg = "white", fg="black")
+        self.app_canvas.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+        self.scrolling.pack(side=tk.RIGHT, fill=tk.Y)
+        self.canvas_frame = self.app_canvas.create_window((0, 0), window=self.names_bar_frame, anchor="n")
         requested_player = tk.Label(self, text = "Add player's name here", bg = "lightgreen", fg = "black")
         self.players.append(requested_player)
 
         for player in self.players:
             player.pack(side=tk.TOP, fill=tk.X)
 
-        self.create_wish = tk.Text(self, height=2, bg = "white", fg="black")
         self.create_wish.pack(side=tk.BOTTOM, fill=tk.X)
         self.create_wish.focus_set()
         self.bind("<Return>", self.add_player)
