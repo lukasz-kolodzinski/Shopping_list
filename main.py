@@ -36,7 +36,7 @@ class TransferList(tk.Tk):
 
         requested_player = tk.Label(self.names_bar_frame, text = "Add player's name here", bg = "lightgreen", fg = "black",
                                     pady=10, padx=190)
-###        requested_player("<Button-1>", self.remove_task)
+###        requested_player("<Button-1>", self.remove_player)
         self.players.append(requested_player)
 
         for player in self.players:
@@ -65,7 +65,9 @@ class TransferList(tk.Tk):
             event.widget.destroy()
             self.recolour_bars()
 
-    
+    def recolor_bars(self):
+        for index, player in enumerate(self.players):
+            self.set_bar_color(index, player)
 
 if __name__ == "__main__":
     transfer_list = TransferList()
