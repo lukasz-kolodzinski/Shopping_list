@@ -3,6 +3,7 @@ Developed by Lukasz Kolodzinski
 """
 
 import tkinter as tk
+import tkinter.messagebox as msg
 
 class TransferList(tk.Tk):
     def __init__(self, players = None):
@@ -56,6 +57,15 @@ class TransferList(tk.Tk):
             wished_player.pack(side=tk.TOP, fill=tk.X)
             self.players.append(wished_player)
         self.create_wish.delete(1.0, tk.END)
+
+    def remove_player(self, event):
+        player = event.widget
+        if msg.askyesno("Confirm delte", "Do you want to delete {} ?".format(player.cget("text"))):
+            self.players.remove(event.widget)
+            event.widget.destroy()
+            self.recolour_bars()
+
+    
 
 if __name__ == "__main__":
     transfer_list = TransferList()
