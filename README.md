@@ -4,6 +4,6 @@ Desktop app written with Tkinter library.
 Application allows FIFA players to create transfers whish-list.
 
 ## Work environment
-* Python 3.5
+* Python 3.6
 * Tkinter
 * PyCharm
