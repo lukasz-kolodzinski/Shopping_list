@@ -50,10 +50,7 @@ class TransferList(tk.Tk):
 
         if len(player_name) > 0:
             wished_player = tk.Label(self.names_bar_frame, text = player_name, pady=10)
-            _, bar_style_choice = divmod(len(self.players), 2)
-            color_scheme_choose = self.color_schemes[bar_style_choice]
-            wished_player.configure(bg=color_scheme_choose["bg"])
-            wished_player.configure(fg=color_scheme_choose["fg"])
+            self.set_bar_color(len(self.players), wished_player)
             wished_player.pack(side=tk.TOP, fill=tk.X)
             self.players.append(wished_player)
         self.create_wish.delete(1.0, tk.END)
@@ -66,8 +63,14 @@ class TransferList(tk.Tk):
             self.recolour_bars()
 
     def recolor_bars(self):
-        for index, player in enumerate(self.players):
-            self.set_bar_color(index, player)
+        for index, wished_player in enumerate(self.players):
+            self.set_bar_color(index, wished_player)
+
+    def set_bar_color(self, index, wished_player):
+        _, choose_bar_color = divmod(index, 2)
+        choosen_scheme = self.color_schemes[choose_bar_color]
+        wished_player.configure(bg=choosen_scheme["bg"])
+        wished_player.configure(fg=choosen_scheme["fg"])
 
 if __name__ == "__main__":
     transfer_list = TransferList()
