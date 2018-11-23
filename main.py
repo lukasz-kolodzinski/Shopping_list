@@ -36,13 +36,20 @@ class TransferList(tk.Tk):
 
         requested_player = tk.Label(self.names_bar_frame, text = "Add player's name here", bg = "lightgreen", fg = "black",
                                     pady=10, padx=190)
-###        requested_player("<Button-1>", self.remove_player)
+        #requested_player.bind("<Button-1>", self.remove_player)
         self.players.append(requested_player)
 
         for player in self.players:
             player.pack(side=tk.TOP, fill=tk.X)
 
         self.bind("<Return>", self.add_player)
+        self.bind("<Configure>", self.scroll_canvas)
+        self.bind_all("<MouseWheel>", self.mouse_scroll)
+        # Button-4 and Button-5 handle mouse scroll for Linux
+        self.bind_all("<Button-4>", self.mouse_scroll)
+        self.bind_all("<Button-5>", self.mouse_scroll)
+        self.app_canvas.bind("<Configure>", self.canvas_width)
+
         self.color_schemes = [{"bg": "lightgrey", "fg": "black"}, {"bg": "lightblue", "fg": "black"}]
 
     def add_player(self, event=None):
@@ -51,6 +58,7 @@ class TransferList(tk.Tk):
         if len(player_name) > 0:
             wished_player = tk.Label(self.names_bar_frame, text = player_name, pady=10)
             self.set_bar_color(len(self.players), wished_player)
+            wished_player.bind("<Button-1>", self.remove_player)
             wished_player.pack(side=tk.TOP, fill=tk.X)
             self.players.append(wished_player)
         self.create_wish.delete(1.0, tk.END)
@@ -60,7 +68,7 @@ class TransferList(tk.Tk):
         if msg.askyesno("Confirm delte", "Do you want to delete {} ?".format(player.cget("text"))):
             self.players.remove(event.widget)
             event.widget.destroy()
-            self.recolour_bars()
+            self.recolor_bars()
 
     def recolor_bars(self):
         for index, wished_player in enumerate(self.players):
@@ -78,6 +86,17 @@ class TransferList(tk.Tk):
     def canvas_width(self, event):
         width_of_canvas = event.width
         self.app_canvas.itemconfig(self.canvas_frame, width=width_of_canvas)
+
+    def mouse_scroll(self, event):
+        if event.delta:
+            self.app_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        else:
+            if event.num == 5:
+                move = 1
+            else:
+                move = -1
+
+            self.app_canvas.yview_scroll(move, "units")
 
 if __name__ == "__main__":
     transfer_list = TransferList()
