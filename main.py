@@ -76,7 +76,8 @@ class TransferList(tk.Tk):
         self.app_canvas.configure(scrollregion=self.app_canvas.bbox("all"))
 
     def canvas_width(self, event):
-        
+        width_of_canvas = event.width
+        self.app_canvas.itemconfig(self.canvas_frame, width=width_of_canvas)
 
 if __name__ == "__main__":
     transfer_list = TransferList()
