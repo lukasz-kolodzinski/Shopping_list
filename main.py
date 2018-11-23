@@ -34,11 +34,10 @@ class TransferList(tk.Tk):
         self.text_frame.pack(side=tk.BOTTOM, fill=tk.X)
         self.create_wish.focus_set()
 
-        requested_player = tk.Label(self.names_bar_frame, text = "Add player's name here", bg = "lightgreen", fg = "black",
+        requested_player = tk.Label(self.app_canvas, text = "Add player's name here", bg = "lightgreen", fg = "black",
                                     pady=10, padx=190)
-        #requested_player.bind("<Button-1>", self.remove_player)
-        self.players.append(requested_player)
-
+        requested_player.pack()
+        
         for player in self.players:
             player.pack(side=tk.TOP, fill=tk.X)
 
@@ -90,6 +89,7 @@ class TransferList(tk.Tk):
     def mouse_scroll(self, event):
         if event.delta:
             self.app_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        # Linux mouse scroll handling
         else:
             if event.num == 5:
                 move = 1
