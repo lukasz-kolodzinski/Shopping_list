@@ -72,6 +72,12 @@ class TransferList(tk.Tk):
         wished_player.configure(bg=choosen_scheme["bg"])
         wished_player.configure(fg=choosen_scheme["fg"])
 
+    def scroll_canvas(self, event=None):
+        self.app_canvas.configure(scrollregion=self.app_canvas.bbox("all"))
+
+    def canvas_width(self, event):
+        
+
 if __name__ == "__main__":
     transfer_list = TransferList()
     transfer_list.mainloop()
